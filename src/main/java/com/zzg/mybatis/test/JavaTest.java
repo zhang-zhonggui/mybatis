@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @Author: zzg
@@ -48,4 +49,15 @@ public class JavaTest {
         int update = sqlSession.update("update", new Student(160, "aa", 20, "南京", 2));
         System.out.println(update);
     }
+    @Test
+    public void list() throws Exception{
+        List<Object> list = sqlSession.selectList("list", Student.class);
+        System.out.println(list);
+    }
+    @Test
+    public void get()throws Exception {
+        Student get = sqlSession.selectOne("get", 165);
+        System.out.println(get);
+    }
+
 }
