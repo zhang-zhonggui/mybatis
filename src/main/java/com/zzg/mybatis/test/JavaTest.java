@@ -1,6 +1,7 @@
 package com.zzg.mybatis.test;
 
 import com.zzg.mybatis.entity.Student;
+import com.zzg.mybatis.mapper.StudentMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -35,29 +36,41 @@ public class JavaTest {
     }
 
     @Test
-    public void test1() throws Exception {
-        int insert = sqlSession.insert("add",new Student(null,"张三",18,"北京",2));
-        System.out.println(insert);
-    }
-    @Test
-    public void test2() throws Exception {
-        int delete = sqlSession.delete("delete",123);
+    public void test() throws Exception {
+        StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
+        int delete = mapper.delete(168);
         System.out.println(delete);
     }
+
     @Test
-    public void test3() throws Exception{
-        int update = sqlSession.update("update", new Student(160, "aa", 20, "南京", 2));
-        System.out.println(update);
+    public void test1() {
+        Student student = new Student(null, "张三", 18, "北京", 2);
+        StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
+        int add = mapper.add(student);
+        System.out.println(add);
     }
+
     @Test
-    public void list() throws Exception{
-        List<Object> list = sqlSession.selectList("list", Student.class);
+    public void test2() {
+        Student student = new Student(168, "张三", 18, "北京", 2);
+        StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
+        int i = mapper.update(student);
+        System.out.println(i);
+    }
+
+    @Test
+    public void test3() {
+        StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
+        Student student = mapper.get(169);
+        System.out.println(student);
+    }
+
+    @Test
+    public void test4() {
+        StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
+        List<Student> list = mapper.list();
         System.out.println(list);
     }
-    @Test
-    public void get()throws Exception {
-        Student get = sqlSession.selectOne("get", 165);
-        System.out.println(get);
-    }
+
 
 }
